@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=docker
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+    volumes:
+      - devmatch_pg_data:/bitnami/postgresql
+
+volumes:
+  devmatch_pg_data:
