@@ -1,23 +1,24 @@
-import { Prisma, User } from '@prisma/client';
-import { UserEntity } from '../../repositories/entities/user.entity';
+import { UniqueEntityId } from '@/core/entities/unique-entity-id';
+import { User } from '@/domain/enterprise/entities/user.entity';
+import { Prisma, User as PrismaUser } from '@prisma/client';
 
 export class PrismaUserMapper {
-  static toDomain(raw: User): UserEntity {
-    return new UserEntity({
-      id: raw.id,
-      name: raw.name,
-      email: raw.email,
-      password: raw.password ?? undefined,
-      githubProfile: raw.github_profile ?? undefined,
-      bio: raw.bio ?? undefined,
-      technologies: raw.technologies ?? undefined,
-      avatarUrl: raw.avatar_url ?? undefined,
-      createdAt: raw.created_at,
-      updatedAt: raw.updated_at,
-    });
+  static toDomain(raw: PrismaUser): User {
+    return User.create(
+      {
+        name: raw.name,
+        email: raw.email,
+        password: raw.password ?? undefined,
+        githubProfile: raw.github_profile ?? undefined,
+        bio: raw.bio ?? undefined,
+        technologies: raw.technologies ?? undefined,
+        avatarUrl: raw.avatar_url ?? undefined,
+      },
+      new UniqueEntityId(raw.id),
+    );
   }
 
-  static toPrisma(user: UserEntity): Prisma.UserUncheckedCreateInput {
+  static toPrisma(user: User): Prisma.UserUncheckedCreateInput {
     return {
       name: user.name,
       email: user.email,

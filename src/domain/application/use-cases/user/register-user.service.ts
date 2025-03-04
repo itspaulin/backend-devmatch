@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserRepository } from 'src/infra/database/repositories/user.repository';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UserEntity } from 'src/infra/database/repositories/entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { UserEntity } from '@/domain/enterprise/entities/user.entity';
 
 @Injectable()
-export class CreateUserUseCase {
+export class CreateUserUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(dto: CreateUserDto): Promise<UserEntity> {

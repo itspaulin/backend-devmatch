@@ -1,13 +1,13 @@
 import { Module, Logger } from '@nestjs/common';
-import { CreateUserUseCase } from 'src/modules/use-cases/user/create-user.service';
 import { UserRepository } from '../database/repositories/user.repository';
 import { PrismaModule } from '../database/prisma/prisma.module';
 import { CreateAccountController } from './controllers/create-user.controller';
+import { CreateUserUserUseCase } from '@/domain/application/use-cases/user/register-user.service';
 
 @Module({
   imports: [PrismaModule],
   controllers: [CreateAccountController],
-  providers: [CreateUserUseCase, UserRepository],
+  providers: [CreateUserUserUseCase, UserRepository],
 })
 export class HttpModule {
   constructor() {
