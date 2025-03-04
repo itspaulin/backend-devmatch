@@ -7,8 +7,8 @@ import {
   ValidationPipe,
   Logger,
 } from '@nestjs/common';
-import { UserEntity } from '@/domain/enterprise/entities/user.entity';
 import { CreateUserDto } from '@/domain/application/use-cases/user/dto/create-user.dto';
+import { User } from '@/domain/enterprise/entities/user.entity';
 
 @Controller('users')
 export class CreateAccountController {
@@ -18,7 +18,7 @@ export class CreateAccountController {
 
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true }))
-  create(@Body() dto: CreateUserDto): Promise<UserEntity> {
+  create(@Body() dto: CreateUserDto): Promise<User> {
     return this.createUserUseCase.execute(dto);
   }
 }
