@@ -1,4 +1,4 @@
-import { CreateUserUserUseCase } from '@/domain/application/use-cases/user/register-user.service';
+import { CreateUserUserUseCase } from '@/domain/application/use-cases/register-user.service';
 import {
   Body,
   Controller,
