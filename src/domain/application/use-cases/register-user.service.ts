@@ -1,8 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../repositories/user.repository';
-import { Either, right } from '@/core/either';
+import { Either, left, right } from '@/core/either';
 import { User } from '@/domain/enterprise/entities/user.entity';
 import { HashGenerator } from '../cryptography/hash-generator';
+import { UserAlreadyExistsError } from './errors/user-aready-exist-error';
 
 interface CreateUserServiceRequest {
   name: string;
@@ -15,7 +16,7 @@ interface CreateUserServiceRequest {
 }
 
 type CreateUserServiceResponse = Either<
-  BadRequestException,
+  UserAlreadyExistsError,
   {
     user: User;
   }
@@ -40,7 +41,7 @@ export class CreateUserService {
     const existingUser = await this.userRepository.findByEmail(email);
 
     if (existingUser) {
-      throw new BadRequestException('Email is already taken');
+      return left(new UserAlreadyExistsError(email));
     }
 
     const hashedPassword = await this.hashGenerator.hash(password);

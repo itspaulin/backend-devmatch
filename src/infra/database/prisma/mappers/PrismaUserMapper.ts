@@ -9,10 +9,12 @@ export class PrismaUserMapper {
         name: raw.name,
         email: raw.email,
         password: raw.password,
-        githubProfile: raw.github_profile ?? undefined,
+        githubProfile: raw.githubProfile ?? undefined,
         bio: raw.bio ?? undefined,
         technologies: raw.technologies ?? undefined,
-        avatarUrl: raw.avatar_url ?? undefined,
+        avatarUrl: raw.avatarUrl ?? undefined,
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt,
       },
       new UniqueEntityId(raw.id),
     );
@@ -20,13 +22,16 @@ export class PrismaUserMapper {
 
   static toPrisma(user: User): Prisma.UserUncheckedCreateInput {
     return {
+      id: user.id.toString(),
       name: user.name,
       email: user.email,
       password: user.password,
-      github_profile: user.githubProfile,
+      githubProfile: user.githubProfile,
       bio: user.bio,
       technologies: user.technologies,
-      avatar_url: user.avatarUrl,
+      avatarUrl: user.avatarUrl,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
   }
 }

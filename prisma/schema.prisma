@@ -14,16 +14,16 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  name           String
-  email          String   @unique
-  password       String
-  github_profile String?
-  bio            String?
-  technologies   String[]
-  avatar_url     String?
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  password      String
+  githubProfile String?
+  bio           String?
+  technologies  String[]
+  avatarUrl     String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
 
   @@map("users")
 }
