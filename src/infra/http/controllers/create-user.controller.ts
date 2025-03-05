@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
-import { CreateUserUseCase } from '@/domain/application/use-cases/register-user.service';
 import { WrongCredentialsError } from '@/domain/application/use-cases/errors/wrong-credentials-error';
+import { CreateUserService } from '@/domain/application/use-cases/register-user.service';
+import { Public } from '@/infra/auth/public';
 
 const createUserBodySchema = z.object({
   name: z.string(),
@@ -24,9 +25,10 @@ const createUserBodySchema = z.object({
 
 type CreateUserSchema = z.infer<typeof createUserBodySchema>;
 
-@Controller('/users')
+@Controller('/accounts')
+@Public()
 export class CreateAccountController {
-  constructor(private readonly createUserUseCase: CreateUserUseCase) {}
+  constructor(private readonly createUserUseCase: CreateUserService) {}
 
   @Post()
   @HttpCode(201)

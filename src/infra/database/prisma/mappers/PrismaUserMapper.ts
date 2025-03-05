@@ -8,7 +8,7 @@ export class PrismaUserMapper {
       {
         name: raw.name,
         email: raw.email,
-        password: raw.password ?? undefined,
+        password: raw.password,
         githubProfile: raw.github_profile ?? undefined,
         bio: raw.bio ?? undefined,
         technologies: raw.technologies ?? undefined,
