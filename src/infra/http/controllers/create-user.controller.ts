@@ -1,14 +1,15 @@
-import { CreateUserUserUseCase } from '@/domain/application/use-cases/register-user.service';
 import {
   BadRequestException,
   Body,
   Controller,
+  HttpCode,
   Post,
   UnauthorizedException,
   UsePipes,
 } from '@nestjs/common';
 import { z } from 'zod';
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
+import { CreateUserUserUseCase } from '@/domain/application/use-cases/register-user.service';
 import { WrongCredentialsError } from '@/domain/application/use-cases/errors/wrong-credentials-error';
 
 const createUserBodySchema = z.object({
@@ -28,6 +29,7 @@ export class CreateAccountController {
   constructor(private readonly createUserUseCase: CreateUserUserUseCase) {}
 
   @Post()
+  @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createUserBodySchema))
   async handle(@Body() body: CreateUserSchema) {
     const {
