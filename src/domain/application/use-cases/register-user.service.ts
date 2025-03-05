@@ -4,7 +4,7 @@ import { Either, right } from '@/core/either';
 import { User } from '@/domain/enterprise/entities/user.entity';
 import { HashGenerator } from '../cryptography/hash-generator';
 
-interface CreateUserUserUseCaseRequest {
+interface CreateUserUseCaseRequest {
   name: string;
   email: string;
   password: string;
@@ -14,7 +14,7 @@ interface CreateUserUserUseCaseRequest {
   avatarUrl: string;
 }
 
-type CreateUserUserUseCaseResponse = Either<
+type CreateUserUseCaseResponse = Either<
   BadRequestException,
   {
     user: User;
@@ -22,10 +22,10 @@ type CreateUserUserUseCaseResponse = Either<
 >;
 
 @Injectable()
-export class CreateUserUserUseCase {
+export class CreateUserUseCase {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly hashGenerator: HashGenerator,
+    private hashGenerator: HashGenerator,
   ) {}
 
   async execute({
@@ -36,7 +36,7 @@ export class CreateUserUserUseCase {
     bio,
     technologies,
     avatarUrl,
-  }: CreateUserUserUseCaseRequest): Promise<CreateUserUserUseCaseResponse> {
+  }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
     const existingUser = await this.userRepository.findByEmail(email);
 
     if (existingUser) {
